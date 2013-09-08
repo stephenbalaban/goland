@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/aarzilli/golua/lua"
-	"github.com/mischief/goland/game"
-	"github.com/mischief/goland/game/gutil"
+	"github.com/stephenbalaban/goland/game"
+	"github.com/stephenbalaban/goland/game/gutil"
 	"github.com/nsf/termbox-go"
 	"github.com/stevedonovan/luar"
   "unicode/utf8"

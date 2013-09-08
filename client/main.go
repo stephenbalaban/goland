@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/aarzilli/golua/lua"
-	"github.com/mischief/goland/game/gutil"
+	"github.com/stephenbalaban/goland/game/gutil"
 	"log"
 	"os"
 	"reflect"

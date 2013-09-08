@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/errnoh/termbox/panel"
 	"github.com/mischief/gochanio"
-	"github.com/mischief/goland/game"
-	"github.com/mischief/goland/game/gnet"
-	"github.com/mischief/goland/game/gutil"
+	"github.com/stephenbalaban/goland/game"
+	"github.com/stephenbalaban/goland/game/gnet"
+	"github.com/stephenbalaban/goland/game/gutil"
 	"github.com/nsf/termbox-go"
 	"image"
 	"io"
@@ -35,6 +35,7 @@ var (
 		'i': game.ACTION_ITEM_LIST_INVENTORY,
 	}
 )
+// We don't have any way to implement commands with arguments.
 
 type Game struct {
 	player game.Object

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/mischief/gochanio"
-	"github.com/mischief/goland/game"
-	"github.com/mischief/goland/game/gnet"
+	"github.com/stephenbalaban/goland/game"
+	"github.com/stephenbalaban/goland/game/gnet"
 	uuid "github.com/nu7hatch/gouuid"
 	"image"
 	"log"

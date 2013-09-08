@@ -6,9 +6,9 @@ package main
 import (
 	"fmt"
 	"github.com/aarzilli/golua/lua"
-	"github.com/mischief/goland/game"
-	"github.com/mischief/goland/game/gnet"
-	"github.com/mischief/goland/game/gutil"
+	"github.com/stephenbalaban/goland/game"
+	"github.com/stephenbalaban/goland/game/gnet"
+	"github.com/stephenbalaban/goland/game/gutil"
 	"github.com/stevedonovan/luar"
 	"github.com/trustmaster/goflow"
 	"image"
@@ -22,6 +22,8 @@ var (
 		game.ACTION_ITEM_PICKUP:         Action_ItemPickup,
 		game.ACTION_ITEM_DROP:           Action_ItemDrop,
 		game.ACTION_ITEM_LIST_INVENTORY: Action_Inventory,
+		game.ACTION_ITEM_EQUIP:          Action_ItemEquip,
+		game.ACTION_ITEM_UNEQUIP:          Action_ItemUnequip,
 	}
 
 	GS *GameServer
@@ -319,6 +321,12 @@ func Action_ItemPickup(gs *GameServer, cp *ClientPacket) {
 	}
 }
 
+// Player equips/unequips an item
+func Action_ItemEquip(gs *GameServer, cp *ClientPacket) {
+}
+func Action_ItemUnequip(gs *GameServer, cp *ClientPacket) {
+}
+
 // Player drops the item indicated by the ID from their inventory
 // TODO: this drops all items right now. make it drop individual items
 func Action_ItemDrop(gs *GameServer, cp *ClientPacket) {
@@ -346,24 +354,27 @@ func Action_Inventory(gs *GameServer, cp *ClientPacket) {
 
 	inv := plobj.GetSubObjects().Chan()
 
-	if len(inv) == 0 {
-		cp.Reply(gnet.NewPacket("Rchat", "You have 0 items."))
-	} else {
+	if len(inv) <= 0 {
+		cp.Reply(gnet.NewPacket("Rchat", "Your inventory is empty."))
+	}  else {
+		name_id := make(map[string]int)
 		counts := make(map[string]int)
 		for sub := range inv {
+			i := sub.GetID()
 			n := sub.GetName()
 			if _, ok := counts[n]; ok {
 				counts[n]++
 			} else {
 				counts[n] = 1
+				name_id[n] = i
 			}
 		}
 
 		for n, c := range counts {
 			if c == 1 {
-				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("You have a %s.", n)))
+				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("%d - You have a %s.", name_id[n], n)))
 			} else {
-				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("You have %d %ss.", c, n)))
+				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("%d - You have %d %ss.", name_id[n], c, n)))
 			}
 
 		}

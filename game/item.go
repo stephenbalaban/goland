@@ -14,6 +14,7 @@ func init() {
 type Item struct {
 	Object          // The game object?
 
+	ItemID   int
 	Desc     string
 	Weight   int
 	Modifier int

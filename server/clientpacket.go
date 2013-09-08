@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/mischief/goland/game/gnet"
+	"github.com/stephenbalaban/goland/game/gnet"
 	"log"
 )
 
