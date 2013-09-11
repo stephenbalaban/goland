@@ -41,6 +41,7 @@ type Game struct {
 	pm     sync.Mutex
 
 	Terminal
+	sidepanel  *LogPanel
 	logpanel  *LogPanel
 	chatpanel *ChatPanel
 
@@ -73,11 +74,13 @@ func NewGame(config *gutil.LuaConfig) *Game {
 
 	g.panels["stats"] = NewStatsPanel()
 	g.panels["view"] = NewViewPanel(&g)
+	g.panels["side"] = NewLogPanel()
 	g.panels["log"] = NewLogPanel()
 	g.panels["player"] = NewPlayerPanel(&g)
 	g.panels["chat"] = NewChatPanel(&g, &g.Terminal)
 
 	g.logpanel = g.panels["log"].(*LogPanel)
+	g.sidepanel = g.panels["side"].(*LogPanel)
 	g.chatpanel = g.panels["chat"].(*ChatPanel)
 
 	//g.chatbox = NewChatBuffer(&g, &g.Terminal)
@@ -282,6 +285,10 @@ func (g *Game) HandlePacket(pk *gnet.Packet) {
 
 	log.Printf("Game: HandlePacket: %s", pk)
 	switch pk.Tag {
+
+	// Rside: we got a response to the side panel
+	case "Rside":
+		io.WriteString(g.sidepanel, pk.Data.(string))
 
 	// Rchat: we got a text message
 	case "Rchat":

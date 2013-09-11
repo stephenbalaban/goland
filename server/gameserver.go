@@ -339,13 +339,15 @@ func Action_ItemDrop(gs *GameServer, cp *ClientPacket) {
 }
 
 // List items in Player's inventory
+// This goes to the side channel.
 func Action_Inventory(gs *GameServer, cp *ClientPacket) {
+	channel := "Rside"
 	plobj := cp.Client.Player
 
 	inv := plobj.GetSubObjects().Chan()
 
 	if len(inv) == 0 {
-		cp.Reply(gnet.NewPacket("Rchat", "You have 0 items."))
+		cp.Reply(gnet.NewPacket(channel, "You have 0 items."))
 	} else {
 		counts := make(map[string]int)
 		for sub := range inv {
@@ -359,9 +361,9 @@ func Action_Inventory(gs *GameServer, cp *ClientPacket) {
 
 		for n, c := range counts {
 			if c == 1 {
-				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("You have a %s.", n)))
+				cp.Reply(gnet.NewPacket(channel, fmt.Sprintf("You have a %s.", n)))
 			} else {
-				cp.Reply(gnet.NewPacket("Rchat", fmt.Sprintf("You have %d %ss.", c, n)))
+				cp.Reply(gnet.NewPacket(channel, fmt.Sprintf("You have %d %ss.", c, n)))
 			}
 
 		}
