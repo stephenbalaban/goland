@@ -7,11 +7,6 @@ import (
 	"sync"
 )
 
-const (
-	// Number of lines to store in the log's circular buffer
-	nlines = 4
-)
-
 // LogPanel holds a log in a circular buffer,
 // i.e. old entries fall off (not off the front, off the back)
 type LogPanel struct {
@@ -21,10 +16,11 @@ type LogPanel struct {
 	lines        int      // number of lines to show
 	messages     []string // circular buffer of messages
 	start, count int      // tracking for messages
+	rect         image.Rectangle     // size of the logpanel
 }
 
 // Construct a new LogPanel
-func NewLogPanel() *LogPanel {
+func NewLogPanel(nlines int) *LogPanel {
 	lp := &LogPanel{
 		lines:    nlines,
 		messages: make([]string, nlines),
@@ -37,10 +33,10 @@ func NewLogPanel() *LogPanel {
 
 // Handle an input event
 // Only used for resizing panel
+// We reallly should set the panel size programatically...
 func (lp *LogPanel) HandleInput(ev termbox.Event) {
 	if ev.Type == termbox.EventResize {
-		w, h := termbox.Size()
-		r := image.Rect(1, h-7, w-1, h-3)
+		r := lp.rect
 		lp.Buffered = panel.NewBuffered(r, termbox.Cell{'s', termbox.ColorGreen, 0})
 	}
 }

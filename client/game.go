@@ -74,14 +74,15 @@ func NewGame(config *gutil.LuaConfig) *Game {
 
 	g.panels["stats"] = NewStatsPanel()
 	g.panels["view"] = NewViewPanel(&g)
-	g.panels["side"] = NewLogPanel()
-	g.panels["log"] = NewLogPanel()
+	g.panels["side"] = NewLogPanel(20)
+	g.panels["log"] = NewLogPanel(4)
 	g.panels["player"] = NewPlayerPanel(&g)
 	g.panels["chat"] = NewChatPanel(&g, &g.Terminal)
 
 	g.logpanel = g.panels["log"].(*LogPanel)
 	g.sidepanel = g.panels["side"].(*LogPanel)
 	g.chatpanel = g.panels["chat"].(*ChatPanel)
+
 
 	//g.chatbox = NewChatBuffer(&g, &g.Terminal)
 
@@ -194,6 +195,16 @@ func (g *Game) Start() {
 
 	// terminal/keyhandling setup
 	g.Terminal.Start()
+
+	// Set the sizes of the logpanel + sidepanel
+	w, h := termbox.Size()
+	print(w)
+	print("sex")
+	print(h)
+	print("sex2")
+	g.logpanel.rect = image.Rect(1, h-7, w/2-1, h-3)
+	g.sidepanel.rect = image.Rect(w-1, 3, 3 * w / 4, 20)
+	g.sidepanel.lines = 20
 
 	// chat dialog
 	//g.TermLog = NewTermLog(image.Pt(g.Terminal.Rect.Width-VIEW_START_X-VIEW_PAD_X, 5))
