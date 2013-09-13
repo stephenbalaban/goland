@@ -8,11 +8,6 @@ func init() {
 	gob.Register(&Player{})
 }
 
-type HP struct {
-	current int
-	max     int
-}
-
 type Player struct {
 	*Unit
 }

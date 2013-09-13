@@ -5,19 +5,22 @@ import (
 	"fmt"
 )
 
+type HP struct {
+	current int
+	max int
+}
+
 type Unit struct {
 	Object
 	*Inventory
 
 	Level     int
-	Hp, HpMax int
+	hp        *HP
 }
 
 func NewUnit(name string, hp int, hpmax int) *Unit {
-	u := &Unit{Level: 1,
-		Hp:    hp,
-		HpMax: hpmax,
-	}
+	hps := &HP{ current: hp, max: hpmax }
+	u := &Unit{Level: 1, hp: hps }
 	u.Inventory = NewInventory()
 
 	ob := NewGameObject(name)
@@ -35,5 +38,5 @@ func (u Unit) HasItem(i *Item) bool {
 }
 
 func (u Unit) String() string {
-	return fmt.Sprintf("%s: Hp: %d(%d) %s", u.GetName(), u.Hp, u.HpMax, u.Object)
+	return fmt.Sprintf("%s: Hp: %d(%d) %s", u.GetName(), u.hp.current, u.hp.max, u.Object)
 }
