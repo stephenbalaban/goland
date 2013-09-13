@@ -346,6 +346,9 @@ func Action_Inventory(gs *GameServer, cp *ClientPacket) {
 
 	inv := plobj.GetSubObjects().Chan()
 
+	clearString := " \n.\n.\n.\n.\n.\n.\n.\n.\n.\n."
+	cp.Reply(gnet.NewPacket(channel, clearString))
+
 	if len(inv) == 0 {
 		cp.Reply(gnet.NewPacket(channel, "You have 0 items."))
 	} else {

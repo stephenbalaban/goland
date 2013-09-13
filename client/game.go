@@ -203,8 +203,8 @@ func (g *Game) Start() {
 	print(h)
 	print("sex2")
 	g.logpanel.rect = image.Rect(1, h-7, w/2-1, h-3)
-	g.sidepanel.rect = image.Rect(w-1, 3, 3 * w / 4, 20)
-	g.sidepanel.lines = 20
+	g.sidepanel.rect = image.Rect(w-1, 3, 3 * w / 4, 18)
+	g.sidepanel.lines = 18
 
 	// chat dialog
 	//g.TermLog = NewTermLog(image.Pt(g.Terminal.Rect.Width-VIEW_START_X-VIEW_PAD_X, 5))
@@ -299,6 +299,7 @@ func (g *Game) HandlePacket(pk *gnet.Packet) {
 
 	// Rside: we got a response to the side panel
 	case "Rside":
+		g.sidepanel.Reset()
 		io.WriteString(g.sidepanel, pk.Data.(string))
 
 	// Rchat: we got a text message
