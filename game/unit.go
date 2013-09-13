@@ -5,10 +5,6 @@ import (
 	"fmt"
 )
 
-const (
-	DEFAULT_HP = 10
-)
-
 type Unit struct {
 	Object
 	*Inventory
@@ -17,10 +13,10 @@ type Unit struct {
 	Hp, HpMax int
 }
 
-func NewUnit(name string) *Unit {
+func NewUnit(name string, hp int, hpmax int) *Unit {
 	u := &Unit{Level: 1,
-		Hp:    DEFAULT_HP,
-		HpMax: DEFAULT_HP,
+		Hp:    hp,
+		HpMax: hpmax,
 	}
 	u.Inventory = NewInventory()
 

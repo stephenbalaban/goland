@@ -42,7 +42,8 @@ func (c *PlayerPanel) HandleInput(ev termbox.Event) {
 
 func (c *PlayerPanel) Draw() {
 	c.Clear()
-	str := fmt.Sprintf("User: %s Pos: %d,%d", c.name, c.x, c.y)
+	p := c.g.GetPlayer()
+	str := fmt.Sprintf("User: %s Pos: %d,%d HP: %d/%d", c.name, c.x, c.y, p.Hp, p.HpMax)
 	for i, r := range str {
 		c.SetCell(i, 0, r, termbox.ColorBlue, termbox.ColorDefault)
 	}
