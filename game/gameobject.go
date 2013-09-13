@@ -85,7 +85,7 @@ type GameObject struct {
 func NewGameObject(name string) Object {
 	gob := &GameObject{
 		ID:         <-idchan,
-        ItemID      -1,
+		ItemID:     -1,
 		Name:       name,
 		Pos:        image.ZP,
 		Glyph:      termbox.Cell{'¡', termbox.ColorRed, termbox.ColorDefault},
