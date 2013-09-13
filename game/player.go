@@ -22,5 +22,7 @@ func NewPlayer(name string) *Player {
 	p := &Player{Unit: o}
 
 	p.SetTag("player", true)
+	// setting this lets players pick up other players, lol
+	//newplayer.SetTag("gettable", true)
 	return p
 }

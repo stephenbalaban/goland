@@ -244,13 +244,8 @@ func (gs *GameServer) HandlePacket(cp *ClientPacket) {
 
 		// make new player for client
 		var newplayer game.Object
-		newplayer = game.NewGameObject(username)
-		newplayer.SetTag("player", true)
+		newplayer = game.NewPlayer(username)
 		newplayer.SetTag("visible", true)
-
-		// setting this lets players pick up other players, lol
-		//newplayer.SetTag("gettable", true)
-		newplayer.SetGlyph(game.GLYPH_HUMAN)
 		newplayer.SetPos(256/2, 256/2)
 
 		// set the session's object
